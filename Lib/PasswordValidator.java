@@ -1,11 +1,14 @@
 import java.util.*;
 
-import javax.swing.JOptionPane;
-
 public class PasswordValidator {
 
-    // A utility function to check
-    // whether a password is valid or not
+    // A utility function to check whether a password is valid or not
+	/*Password should not contain any space.
+	Password should contain at least one digit(0-9).
+	Password length should be between 4 to 15 characters.
+	Password should contain at least one lowercase letter(a-z).
+	Password should contain at least one uppercase letter(A-Z).
+	Password should contain at least one special character ( @, #, %, &, !, $, etc….). */
     public static boolean isValid(String password)
     {
     	/*=====================check the validity of a Password===================*/
@@ -147,89 +150,51 @@ public class PasswordValidator {
     
     				/*=================Suggest Strong Password===================*/
     
-    // make powerful String
-    static StringBuilder suggester(int l, int u, int d,
-                              int s, StringBuilder str)
-    {
-        Random randm = new Random();
-         
-        // all digits
-        String num = "0123456789";
- 
-        // all lower case, uppercase and special
-        // characters
-        String low_case = "abcdefghijklmnopqrstuvwxyz";
-        String up_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String spl_char = "@#$_()!";
- 
-        // position at which place a character
-        int pos = 0;
- 
-        // if there is no lowercase char in input String, add it
-        if (l == 0) {
-             
-            // generate random integer under String length()
-            pos = randm.nextInt(1000) % str.length();
- 
-            // generate random integer under 26 for indexing of a to z
-            str.setCharAt(pos,low_case.charAt(randm.nextInt(1000)
-                                        % 26));
+    public static StringBuilder generatePassword(String pass) {
+        String capitalCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+        String specialCharacters = "!@#$";
+        String numbers = "1234567890";
+        String combinedChars = capitalCaseLetters + lowerCaseLetters + specialCharacters + numbers;
+        Random random = new Random();
+        int length = 5;
+        char[] password = new char[length];
+
+        password[0] = lowerCaseLetters.charAt(random.nextInt(lowerCaseLetters.length()));
+        password[1] = capitalCaseLetters.charAt(random.nextInt(capitalCaseLetters.length()));
+        password[2] = specialCharacters.charAt(random.nextInt(specialCharacters.length()));
+        password[3] = numbers.charAt(random.nextInt(numbers.length()));
+     
+        for(int i = 4; i< length ; i++) {
+           password[i] = combinedChars.charAt(random.nextInt(combinedChars.length()));
         }
- 
-        // if there is no upper case char in input String, add it
-        if (u == 0) {
-            pos = randm.nextInt(1000) % str.length();
-            str.setCharAt(pos,low_case.charAt(randm.nextInt(1000)
-                                        % 26));
-        }
- 
-        // if there is no digit in input String, add it 
-        if (d == 0) {
-            pos = randm.nextInt(1000) % str.length();
-            str.setCharAt(pos,low_case.charAt(randm.nextInt(1000)
-                                        % 10));
-        }
- 
-        // if there is no special character in input String, add it
-        if (s == 0) {
-            pos = randm.nextInt(1000) % str.length();
-            str.setCharAt(pos,low_case.charAt(randm.nextInt(1000)
-                                        % 7));
-        }
- 
-        return str;
-    }
- 
-    /* make_password function :This function is used 
-    to check strongness and if input String is not
-    strong, it will suggest*/
-    static StringBuilder generate_password(int n, StringBuilder p)
-    {
-         
-        // flag for lower case, upper case, special
-        // characters and need of more characters
-        int l = 0, u = 0, d = 0, s = 0, need = 0;
- 
-        // password suggestions.
-        StringBuilder suggest = null;
         
-        /*suggest 10 strong Strings */
-        for (int i = 0; i < 2; i++) {
-            suggest = suggester(l, u, d, s, p);
-            need = 8 - suggest.length();
-            if (need > 0)
-                suggest = add_more_char(suggest, need);
-            System.out.println(suggest);
+        // Creating array of string length
+        char[] ch = new char[pass.length()];
+        StringBuilder s = new StringBuilder(ch.length);
+        
+        // Copy character by character into array
+        for (int i = 0; i < pass.length(); i++) {
+            ch[i] = pass.charAt(i);
         }
-		return suggest;
-    }
+  
+        // Printing content of array
+        for (char c : ch) {
+        	s.append(c);
+        }
+        s.append(password);
+        return s;
+     }
+    
     
     public static void main(String[] args)
     {
-        String input = "GeeksforGeeks!@12";
+        String input = "Ha";
         checkStrengthOfPassword(input);
         
-        StringBuilder input_String = new StringBuilder("geek@2018");
-        generate_password(input_String.length(), input_String);
+        System.out.println(generatePassword(input));
+        
+        
+        
     }
 }
