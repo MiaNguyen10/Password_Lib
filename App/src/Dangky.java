@@ -11,8 +11,7 @@ public class Dangky extends JFrame {
     private Container container = new Container();
     JTextField username;
     JPasswordField password;
-    int i = 0;
-    String weak, moderate, strong;
+    String suggest_pass;
     public Dangky() {
         super("Register Form");
         init();
@@ -36,7 +35,8 @@ public class Dangky extends JFrame {
         passField.add(new JLabel("Password:"));
         password = new JPasswordField(20);
         passField.add(password);
-		
+		password.setEchoChar((char) 0); //show password
+        
         inputSection.add(userField);
         inputSection.add(passField);
         //===============render button section===============;
@@ -56,8 +56,7 @@ public class Dangky extends JFrame {
         			String password1 = password.getText().toString();
         			
         			StringBuilder inputpass = new StringBuilder(password1);
-        			PasswordValidator.generate_password(inputpass.length(), inputpass);	
-        			
+        			suggest_pass = PasswordValidator.generatePassword(password1).toString();
         			if (PasswordValidator.isValid(password1)) {        				
         				//JOptionPane.showMessageDialog(null,"Insert Successfully! Please Login again." );    
         				if(PasswordValidator.checkStrengthOfPassword(password1)) {
@@ -71,7 +70,13 @@ public class Dangky extends JFrame {
           			               JOptionPane.YES_NO_OPTION,
           			               JOptionPane.QUESTION_MESSAGE);
          					if(result == JOptionPane.YES_OPTION){
-         						password.setText(""); 
+         						int result1 = JOptionPane.showConfirmDialog(null,"Suggest password: "+ suggest_pass, "Confirm Question",
+               			               JOptionPane.YES_NO_OPTION,
+               			               JOptionPane.QUESTION_MESSAGE);
+         						if(result1 == JOptionPane.YES_OPTION)
+         							password.setText(suggest_pass); 
+         						else 
+         							password.setText(""); 
          					}else {  
          						pst.setString(1, username.getText());
          						pst.setString(2, password1);
@@ -82,6 +87,7 @@ public class Dangky extends JFrame {
         	        }
         	        else {
         	        	JOptionPane.showMessageDialog(null,"Invalid Password!!! Please sign up again." );
+        	        	password.setText("");
         	        }         			
         		} catch (Exception e2) {e2.getStackTrace();}
             	
