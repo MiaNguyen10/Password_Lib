@@ -98,16 +98,16 @@ public class PasswordValidator {
         return true;
     }
                               /*=================Check Strength of Password===================*/
-    public static boolean checkStrengthOfPassword(String input)
+    public static boolean checkStrengthOfPassword(String password)
     {
         // Checking lower alphabet in string
-        int n = input.length();
+        int n = password.length();
         boolean hasLower = false, hasUpper = false,
                 hasDigit = false, specialChar = false;
         Set<Character> set = new HashSet<Character>(
             Arrays.asList('!', '@', '#', '$', '%', '^', '&',
                           '*', '(', ')', '-', '+'));
-        for (char i : input.toCharArray())
+        for (char i : password.toCharArray())
         {
             if (Character.isLowerCase(i))
                 hasLower = true;
@@ -128,26 +128,7 @@ public class PasswordValidator {
         	return false; 
     }
     
-    
- // adding more characters to suggest
-    // strong password
-    static StringBuilder add_more_char(
-                        StringBuilder str, int need)
-    {
-        int pos = 0;
-        Random randm = new Random();
-         
-        // all 26 letters
-        String low_case = "abcdefghijklmnopqrstuvwxyz";
- 
-        for (int i = 0; i < need; i++) {
-            pos = randm.nextInt(1000) % str.length();
-            str.setCharAt(pos,low_case.charAt(
-                            randm.nextInt(1000) % 26));
-        }
-        return str;
-    }
-    
+     
     				/*=================Suggest Strong Password===================*/
     
     public static StringBuilder generatePassword(String pass) {

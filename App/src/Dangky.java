@@ -53,12 +53,10 @@ public class Dangky extends JFrame {
         			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/game","root","10062000ha");
         			String query= "Insert into login(acc,pass) values(?,?)";
         			PreparedStatement pst = conn.prepareStatement(query);
-        			String password1 = password.getText().toString();
         			
-        			StringBuilder inputpass = new StringBuilder(password1);
+        			String password1 = password.getText().toString();
         			suggest_pass = PasswordValidator.generatePassword(password1).toString();
         			if (PasswordValidator.isValid(password1)) {        				
-        				//JOptionPane.showMessageDialog(null,"Insert Successfully! Please Login again." );    
         				if(PasswordValidator.checkStrengthOfPassword(password1)) {
         					JOptionPane.showMessageDialog(null,"Insert Successfully! Please Login again." );    
         					pst.setString(1, username.getText());
